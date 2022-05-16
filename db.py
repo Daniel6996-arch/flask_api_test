@@ -1,5 +1,9 @@
 import sqlite3
 
+"""
+Initialize the database and create a table in the database
+"""
+
 conn = sqlite3.connect("dante.db")
 
 cursor = conn.cursor()
