@@ -1,4 +1,5 @@
 import sqlite3
+import requests
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -10,6 +11,17 @@ def db_connection():
     except sqlite3.error as e:
         print(e)
     return conn        
+
+@app.route("/online/request", methods=["GET", "POST"])
+def index():
+    api_key = ""
+    base_url = "https://newsapi.org/v2/everything?q=tesla&from=2022-04-17&sortBy=publishedAt&apiKey={}"
+
+    api_url = base_url.format(api_key)
+    response = requests.get(api_url)
+    result = response.json()
+
+    return result
 
 @app.route("/books", methods=["GET", "POST"])    
 def books():
@@ -34,5 +46,6 @@ def books():
         conn.commit()
 
         return f"Book with id: {cursor.lastrowid} created successfully"
+
 
  
